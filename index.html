@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מכירת דירה - פריטים למכירה</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --light-bg: #ecf0f1;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-radius: 12px;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 10px;
+            color: var(--text-dark);
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 0 10px;
+        }
+
+        .item-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: var(--light-bg);
+        }
+
+        .item-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .item-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .item-condition {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .condition-new {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .condition-like-new {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .condition-used {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .condition-repaired {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .item-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .item-description h3,
+        .item-description h4 {
+            color: var(--text-dark);
+            margin: 10px 0 5px 0;
+        }
+
+        .item-description ul {
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+
+        .item-description li {
+            margin: 5px 0;
+        }
+
+        .item-description strong {
+            color: var(--text-dark);
+        }
+
+        .price-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--light-bg);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .price-section {
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .price-current {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        .price-original {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .price-divider {
+            width: 1px;
+            height: 40px;
+            background: #d0d0d0;
+        }
+
+        .whatsapp-button {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .currency-selector {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--white);
+            padding: 8px 15px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .currency-selector select {
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+            padding: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .item-card {
+                margin: 0 5px;
+            }
+
+            .price-current {
+                font-size: 1.5rem;
+            }
+
+            .currency-selector {
+                top: 10px;
+                left: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .item-title {
+                font-size: 1.2rem;
+            }
+
+            .price-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .price-divider {
+                width: 60px;
+                height: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="currency-selector">
+        <select id="currencySelect" onchange="updateCurrency()">
+            <option value="₪">₪ ILS</option>
+            <option value="$">$ USD</option>
+            <option value="€">€ EUR</option>
+            <option value="£">£ GBP</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🏠 מכירת דירה - פריטים למכירה</h1>
+            <p>כל הפריטים במצב מצוין ומוכנים לאיסוף מיידי</p>
+        </div>
+
+        <div class="items-grid" id="itemsContainer"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const config = {
+            whatsappNumber: '972501234567', // Change this to your WhatsApp number
+            defaultCurrency: '₪',
+            currencySymbol: '₪'
+        };
+
+        // Items data
+        const items = [
+            {
+                name: 'ספה תלת מושבית',
+                condition: 'like-new',
+                description: `ספה **איכותית** ונוחה במיוחד
+                
+### מידות:
+- אורך: 220 ס"מ
+- עומק: 90 ס"מ
+- גובה: 85 ס"מ
+
+### מאפיינים:
+- ריפוד בד איכותי
+- צבע אפור בהיר
+- מנגנון נפתח למיטה
+- כריות נוספות כלולות`,
+                askingPrice: 2500,
+                newPrice: 6500,
+                image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop'
+            },
+            {
+                name: 'מקרר סמסונג דו-דלתי',
+                condition: 'used',
+                description: `מקרר **גדול ומרווח** עם טכנולוגיית No Frost
+
+### פרטים טכניים:
+- נפח: 450 ליטר
+- דירוג אנרגטי: A+
+- מקפיא תחתון
+- מערכת קירור דיגיטלית
+
+**שימוש של 3 שנים בלבד**, פועל מצוין!`,
+                askingPrice: 3200,
+                newPrice: 7800,
+                image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=600&h=400&fit=crop'
+            },
+            {
+                name: 'שולחן אוכל + 6 כיסאות',
+                condition: 'like-new',
+                description: `סט שולחן אוכל מעץ מלא עם 6 כיסאות תואמים
+
+### מפרט:
+- שולחן נפתח 160-240 ס"מ
+- עץ אלון מלא
+- כיסאות מרופדים
+- עיצוב מודרני
+
+מתאים לאירוח עד 10 אנשים`,
+                askingPrice: 4500,
+                newPrice: 9900,
+                image: 'https://images.unsplash.com/photo-1549497538-303791108f95?w=600&h=400&fit=crop'
+            },
+            {
+                name: 'מכונת כביסה בוש 8 ק"ג',
+                condition: 'used',
+                description: `מכונת כביסה **חסכונית ושקטה**
+
+- דגם: Bosch Serie 6
+- קיבולת: 8 ק"ג
+- 1400 סל"ד
+- 15 תוכניות כביסה
+- צריכת חשמל A+++
+
+נרכשה לפני שנתיים, במצב מעולה`,
+                askingPrice: 1800,
+                newPrice: 3500,
+                image: 'https://images.unsplash.com/photo-1626806787461-102c1fc0b3b4?w=600&h=400&fit=crop'
+            },
+            {
+                name: 'ארון בגדים 4 דלתות',
+                condition: 'repaired',
+                description: `ארון בגדים מרווח עם אחסון רב
+
+### מידות ופרטים:
+- רוחב: 200 ס"מ
+- גובה: 240 ס"מ
+- עומק: 60 ס"מ
+
+**תוקנה דלת אחת** - פועל מצוין
+כולל מדפים ומוטות תלייה`,
+                askingPrice: 800,
+                newPrice: 3200,
+                image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=600&h=400&fit=crop'
+            },
+            {
+                name: 'טלוויזיה חכמה 55 אינץ׳',
+                condition: 'like-new',
+                description: `טלוויזיה **Samsung QLED** מדהימה
+
+### מפרט טכני:
+- גודל: 55 אינץ׳
+- רזולוציה: 4K UHD
+- HDR10+
+- מערכת הפעלה: Tizen
+- כולל שלט חכם
+
+נרכשה לפני שנה, אחריות עד 2025`,
+                askingPrice: 3900,
+                newPrice: 5900,
+                image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&h=400&fit=crop'
+            }
+        ];
+
+        // Condition translations
+        const conditionLabels = {
+            'new': 'חדש',
+            'like-new': 'כמו חדש',
+            'used': 'משומש',
+            'repaired': 'תוקן'
+        };
+
+        // Parse markdown to HTML
+        function parseMarkdown(text) {
+            return text
+                .replace(/### (.*?)$/gm, '<h4>$1</h4>')
+                .replace(/## (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/^- (.*?)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // Format price with currency
+        function formatPrice(price) {
+            return `${config.currencySymbol}${price.toLocaleString('he-IL')}`;
+        }
+
+        // Create WhatsApp link
+        function createWhatsAppLink(itemName, price) {
+            const message = `היי, אני מתעניין/ת ב${itemName} במחיר ${formatPrice(price)}`;
+            return `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(message)}`;
+        }
+
+        // Render items
+        function renderItems() {
+            const container = document.getElementById('itemsContainer');
+            container.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                
+                itemCard.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="item-image">
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div>
+                                <h2 class="item-title">${item.name}</h2>
+                                <span class="item-condition condition-${item.condition}">
+                                    ${conditionLabels[item.condition]}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="item-description">
+                            ${parseMarkdown(item.description)}
+                        </div>
+                        
+                        <div class="price-container">
+                            <div class="price-section">
+                                <div class="price-label">מחיר מבוקש</div>
+                                <div class="price-current">${formatPrice(item.askingPrice)}</div>
+                            </div>
+                            <div class="price-divider"></div>
+                            <div class="price-section">
+                                <div class="price-label">מחיר חדש</div>
+                                <div class="price-original">${formatPrice(item.newPrice)}</div>
+                            </div>
+                        </div>
+                        
+                        <a href="${createWhatsAppLink(item.name, item.askingPrice)}" 
+                           target="_blank" 
+                           class="whatsapp-button">
+                            <svg class="whatsapp-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5.64 14.4c-.25.69-.99 1.29-1.62 1.47-.43.11-.97.2-2.81-.6-2.36-.99-3.87-3.36-3.99-3.52-.12-.15-1-1.33-1-2.54 0-1.21.64-1.81.86-2.06.2-.22.54-.28.72-.28.17 0 .33 0 .47.01.15 0 .36-.06.56.43.2.5.69 1.69.75 1.81.06.12.1.27.02.43-.08.17-.12.27-.24.41-.12.15-.25.33-.36.44-.11.12-.23.25-.1.48.13.24.6 1 1.29 1.61.89.79 1.64 1.04 1.87 1.15.23.12.37.1.5-.06.14-.17.56-.66.71-.89.15-.24.3-.2.5-.12.21.08 1.31.62 1.54.73.23.12.38.17.44.27.06.09.06.54-.13 1.06z"/>
+                            </svg>
+                            צרו קשר בוואטסאפ
+                        </a>
+                    </div>
+                `;
+                
+                container.appendChild(itemCard);
+            });
+        }
+
+        // Update currency
+        function updateCurrency() {
+            const select = document.getElementById('currencySelect');
+            config.currencySymbol = select.value;
+            renderItems();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderItems();
+        });
+    </script>
+</body>
+</html>
