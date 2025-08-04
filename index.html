@@ -47,83 +47,115 @@
         }
 
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --success-color: #27ae60;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --light-bg: #ecf0f1;
+            /* Modern minimalist color scheme */
+            --primary-color: #0a0e27;
+            --secondary-color: #6366f1;
+            --accent-color: #ec4899;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
             --white: #ffffff;
-            --text-dark: #2c3e50;
-            --text-light: #7f8c8d;
-            --border-radius: 12px;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --shadow-hover: 0 4px 20px rgba(0,0,0,0.15);
+            --text-dark: #0f172a;
+            --text-medium: #475569;
+            --text-light: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-radius: 16px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             min-height: 100vh;
-            padding: 20px 10px;
+            padding: 15px 10px;
             color: var(--text-dark);
             direction: rtl;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .header {
             text-align: center;
             color: var(--white);
-            margin-bottom: 40px;
-            padding: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
         }
 
         .header h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
         }
 
         .header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: 400;
         }
 
         .items-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
+            gap: 18px;
             padding: 0 10px;
         }
 
         .item-card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .item-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px) scale(1.02);
             box-shadow: var(--shadow-hover);
+            border-color: var(--secondary-color);
         }
 
         .item-image {
             width: 100%;
-            height: 250px;
+            height: 220px;
             object-fit: cover;
             background: var(--light-bg);
         }
 
         .item-content {
-            padding: 20px;
+            padding: 18px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -133,14 +165,14 @@
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .item-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+            color: var(--text-dark);
+            margin-bottom: 6px;
         }
 
         .item-condition {
@@ -153,30 +185,31 @@
         }
 
         .condition-new {
-            background: #d4edda;
-            color: #155724;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
         }
 
         .condition-like-new {
-            background: #cce5ff;
-            color: #004085;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
         }
 
         .condition-used {
-            background: #fff3cd;
-            color: #856404;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
         }
 
         .condition-repaired {
-            background: #f8d7da;
-            color: #721c24;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
         }
 
         .item-description {
-            color: var(--text-light);
+            color: var(--text-medium);
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex-grow: 1;
+            font-size: 0.95rem;
         }
 
         .item-description h3,
@@ -202,10 +235,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background: var(--light-bg);
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
         }
 
         .price-section {
@@ -219,43 +253,65 @@
         }
 
         .price-current {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--success-color);
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .price-original {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-light);
             text-decoration: line-through;
+            opacity: 0.7;
         }
 
         .price-divider {
             width: 1px;
-            height: 40px;
-            background: #d0d0d0;
+            height: 35px;
+            background: linear-gradient(to bottom, transparent, var(--border-color), transparent);
         }
 
         .whatsapp-button {
             background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
             color: white;
             border: none;
-            padding: 15px 25px;
+            padding: 14px 24px;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .whatsapp-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .whatsapp-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        .whatsapp-button:hover::before {
+            opacity: 1;
         }
 
         .whatsapp-icon {
@@ -267,11 +323,13 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 8px 15px;
             border-radius: 25px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
             z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .currency-selector select {
