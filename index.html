@@ -147,7 +147,7 @@
 
         .item-image {
             width: 100%;
-            height: 220px;
+            height: 350px;
             object-fit: cover;
             background: var(--light-bg);
         }
@@ -310,6 +310,51 @@
         
         .whatsapp-button:hover::before {
             opacity: 1;
+        }
+        
+        /* Sold out styles */
+        .item-card.sold-out {
+            position: relative;
+        }
+        
+        .item-card.sold-out::after {
+            content: 'נמכר';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(239, 68, 68, 0.9);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        .item-card.sold-out .item-image {
+            filter: grayscale(80%) brightness(0.7);
+        }
+        
+        .item-card.sold-out .item-content {
+            opacity: 0.6;
+        }
+        
+        .item-card.sold-out .whatsapp-button {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .item-card.sold-out .whatsapp-button::after {
+            content: ' - נמכר';
+        }
+        
+        .item-card.sold-out .price-current {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .whatsapp-icon {
@@ -532,8 +577,9 @@
             container.innerHTML = '';
 
             items.forEach((item, index) => {
+                const isLastItem = index === items.length - 1;
                 const itemCard = document.createElement('div');
-                itemCard.className = 'item-card';
+                itemCard.className = isLastItem ? 'item-card sold-out' : 'item-card';
                 
                 itemCard.innerHTML = `
                     <img src="${item.image}" alt="${item.name}" class="item-image">
