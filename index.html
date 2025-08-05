@@ -120,6 +120,24 @@
             color: #cbd5e1;
             font-weight: 400;
         }
+        
+        .pickup-location {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        
+        .pickup-location a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dashed #60a5fa;
+            transition: all 0.2s ease;
+        }
+        
+        .pickup-location a:hover {
+            color: #93c5fd;
+            border-bottom-style: solid;
+        }
 
         .items-grid {
             display: grid;
@@ -457,6 +475,9 @@
         <div class="header">
             <h1>🏠 מכירת דירה - פריטים למכירה</h1>
             <p>כל הפריטים במצב מצוין ומוכנים לאיסוף מיידי</p>
+            <p class="pickup-location">
+                איסוף מ-<a href="https://waze.com/ul?q=רחוב%20בויאר%204%20תל%20אביב" target="_blank" rel="noopener noreferrer">רחוב בויאר 4, תל אביב</a>
+            </p>
         </div>
 
         <div class="items-grid" id="itemsContainer"></div>
